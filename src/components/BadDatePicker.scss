@@ -1,13 +1,16 @@
+@use "../styles/partials/typography" as *;
+
+@import url("https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap");
 .bad-date-picker {
     min-height: 100vh;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-image: url("half-jack.jpg");
     padding: 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
 
     .container {
-        max-width: 800px;
+        /* max-width: 800px; */
         width: 100%;
         background: white;
         border-radius: 24px;
@@ -16,11 +19,11 @@
     }
 
     .title {
-        font-size: 2.5rem;
+        font-size: 3.5rem;
         font-weight: 800;
         text-align: center;
         margin-bottom: 0.5rem;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #ff7a18 0%, #ff4e00 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -29,7 +32,7 @@
     .subtitle {
         text-align: center;
         color: #6b7280;
-        font-size: 1rem;
+        font-size: 2rem;
         margin-bottom: 2rem;
     }
 
@@ -54,10 +57,10 @@
             transition: all 0.3s ease;
 
             &.active {
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                background: linear-gradient(135deg, #ff7a18 0%, #ff4e00 100%);
                 color: white;
                 transform: scale(1.1);
-                box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+                box-shadow: 0 4px 12px rgba(255, 122, 24, 0.4);
             }
 
             &.completed {
@@ -78,14 +81,15 @@
         margin-bottom: 2rem;
 
         .stage-title {
-            font-size: 1.875rem;
+            font-size: 3.1rem;
             font-weight: 700;
             color: #1f2937;
-            margin-bottom: 1rem;
+            //margin-bottom: 1rem;
+            margin-block: 0;
         }
 
         .stage-description {
-            font-size: 1.125rem;
+            font-size: 2rem;
             color: #6b7280;
             font-weight: 500;
         }
@@ -95,7 +99,7 @@
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #ff7a18 0%, #ff4e00 100%);
         color: white;
         border: none;
         padding: 1rem 2rem;
@@ -104,11 +108,11 @@
         font-weight: 600;
         cursor: pointer;
         transition: all 0.3s ease;
-        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        box-shadow: 0 4px 12px rgba(255, 122, 24, 0.4);
 
         &:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.5);
+            box-shadow: 0 8px 20px rgba(255, 122, 24, 0.5);
         }
 
         &:disabled {
@@ -127,7 +131,11 @@
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 
         .video-feed {
-            display: none;
+            display: block;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            background: #000;
         }
 
         .video-canvas {
@@ -154,7 +162,7 @@
             }
 
             .counter-current {
-                color: #667eea;
+                color: #ff7a18;
             }
 
             .counter-separator {
@@ -173,6 +181,7 @@
             justify-content: center;
             gap: 0.5rem;
             color: #ef4444;
+            font-size: 1.5rem;
             font-weight: 600;
             margin-bottom: 1rem;
             padding: 0.75rem;
@@ -182,6 +191,7 @@
         }
 
         .next-button {
+            display: none;
             background: #10b981;
             color: white;
             border: none;
@@ -253,9 +263,9 @@
         .date-display {
             font-size: 3rem;
             font-weight: 800;
-            color: #667eea;
+            color: #ff7a18;
             margin-bottom: 2rem;
-            font-family: "Courier New", monospace;
+            font-family: "Amatic SC", cursive;
 
             .date-separator {
                 color: #d1d5db;
@@ -264,7 +274,7 @@
         }
 
         .submit-button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ff7a18 0%, #ff4e00 100%);
             color: white;
             border: none;
             padding: 1rem 3rem;
@@ -273,13 +283,46 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 4px 12px rgba(255, 122, 24, 0.4);
 
             &:hover {
                 transform: translateY(-2px);
-                box-shadow: 0 8px 20px rgba(102, 126, 234, 0.5);
+                box-shadow: 0 8px 20px rgba(255, 122, 24, 0.5);
             }
         }
+    }
+
+    .debug-info {
+        font-size: 1rem;
+        color: #666;
+        margin-top: 10px;
+    }
+
+    .birthday-display {
+        font-size: 1.25rem;
+        color: #374151;
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+
+        div {
+            font-weight: 600;
+            font-size: 2rem;
+
+            strong {
+                color: #ff7a18;
+            }
+        }
+    }
+
+    .force-enable-camera,
+    .open-camera {
+        font-size: 1.8rem;
+        padding: 2px 6px;
+        margin: 0.5rem 1rem 0 0;
+        background-color: red;
+        color: white;
+        font-weight: bold;
     }
 
     @keyframes shake {
