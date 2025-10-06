@@ -1,0 +1,352 @@
+.bad-date-picker {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .container {
+        max-width: 800px;
+        width: 100%;
+        background: white;
+        border-radius: 24px;
+        padding: 3rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        text-align: center;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .subtitle {
+        text-align: center;
+        color: #6b7280;
+        font-size: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .stage-indicator {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 2rem;
+        gap: 1rem;
+
+        .stage-step {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #e5e7eb;
+            color: #6b7280;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.125rem;
+            transition: all 0.3s ease;
+
+            &.active {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                transform: scale(1.1);
+                box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            }
+
+            &.completed {
+                background: #10b981;
+                color: white;
+            }
+        }
+
+        .stage-line {
+            width: 80px;
+            height: 3px;
+            background: #e5e7eb;
+        }
+    }
+
+    .stage-info {
+        text-align: center;
+        margin-bottom: 2rem;
+
+        .stage-title {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .stage-description {
+            font-size: 1.125rem;
+            color: #6b7280;
+            font-weight: 500;
+        }
+    }
+
+    .start-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-size: 1.125rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+
+        &:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    }
+
+    .video-container {
+        position: relative;
+        width: 100%;
+        max-width: 640px;
+        margin: 0 auto 2rem;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+
+        .video-feed {
+            display: none;
+        }
+
+        .video-canvas {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+    }
+
+    .counter-section {
+        text-align: center;
+        margin-bottom: 1rem;
+
+        .counter {
+            font-size: 4rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+
+            &.error {
+                color: #ef4444;
+                animation: shake 0.5s ease;
+            }
+
+            .counter-current {
+                color: #667eea;
+            }
+
+            .counter-separator {
+                color: #d1d5db;
+                margin: 0 0.5rem;
+            }
+
+            .counter-target {
+                color: #6b7280;
+            }
+        }
+
+        .year-error {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: #ef4444;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            background: #fee2e2;
+            border-radius: 8px;
+            animation: pulse 2s ease infinite;
+        }
+
+        .next-button {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 0.875rem 2.5rem;
+            border-radius: 12px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+
+            &:hover:not(:disabled) {
+                background: #059669;
+                transform: translateY(-2px);
+                box-shadow: 0 8px 20px rgba(16, 185, 129, 0.5);
+            }
+
+            &:disabled {
+                background: #d1d5db;
+                cursor: not-allowed;
+                box-shadow: none;
+            }
+        }
+    }
+
+    .error-message {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        color: #ef4444;
+        font-weight: 600;
+        padding: 1rem;
+        background: #fee2e2;
+        border-radius: 12px;
+        margin-top: 1rem;
+    }
+
+    .complete-section {
+        text-align: center;
+        padding: 2rem 0;
+
+        .success-icon {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            color: white;
+            animation: scaleIn 0.5s ease;
+        }
+
+        .complete-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .complete-subtitle {
+            font-size: 1.125rem;
+            color: #6b7280;
+            margin-bottom: 2rem;
+        }
+
+        .date-display {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #667eea;
+            margin-bottom: 2rem;
+            font-family: "Courier New", monospace;
+
+            .date-separator {
+                color: #d1d5db;
+                margin: 0 0.25rem;
+            }
+        }
+
+        .submit-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 12px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+
+            &:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 20px rgba(102, 126, 234, 0.5);
+            }
+        }
+    }
+
+    @keyframes shake {
+        0%,
+        100% {
+            transform: translateX(0);
+        }
+        25% {
+            transform: translateX(-10px);
+        }
+        75% {
+            transform: translateX(10px);
+        }
+    }
+
+    @keyframes pulse {
+        0%,
+        100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.7;
+        }
+    }
+
+    @keyframes scaleIn {
+        0% {
+            transform: scale(0);
+            opacity: 0;
+        }
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    @media (max-width: 768px) {
+        padding: 1rem;
+
+        .container {
+            padding: 1.5rem;
+        }
+
+        .title {
+            font-size: 1.75rem;
+        }
+
+        .stage-indicator {
+            .stage-step {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+
+            .stage-line {
+                width: 50px;
+            }
+        }
+
+        .counter {
+            font-size: 3rem !important;
+        }
+
+        .complete-section {
+            .date-display {
+                font-size: 2rem;
+            }
+        }
+    }
+}
