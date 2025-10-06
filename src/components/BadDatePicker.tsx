@@ -133,7 +133,6 @@ export default function BadDatePicker() {
             return;
         }
 
-        // Ensure video is playing before starting detection
         if (videoRef.current && streamRef.current) {
             if (!videoRef.current.srcObject) {
                 videoRef.current.srcObject = streamRef.current;
@@ -157,9 +156,6 @@ export default function BadDatePicker() {
     };
 
     const finishDetection = () => {
-
-        setIsDetecting(false);
-
         if (stage === 'month') {
             setBirthMonth(count);
         } else if (stage === 'day') {
@@ -176,10 +172,20 @@ export default function BadDatePicker() {
         setErrorMessage('');
         setShowYearError(false);
 
+        setCount(0);
+
+        if (detectorRef.current) {
+            detectorRef.current.reset();
+        }
 
         if (stage === 'month') setStage('day');
-        else if (stage === 'day') setStage('year');
-        else if (stage === 'year') setStage('complete');
+        else if (stage === 'day') {
+            setStage('year');
+            setShowYearError(false);
+        }
+        else if (stage === 'year') {
+            setStage('complete');
+        }
     };
 
     const detectPose = useCallback(async () => {
@@ -187,9 +193,7 @@ export default function BadDatePicker() {
             return;
         }
 
-        // Check if video has actual frame data to prevent TensorFlow GPU errors
         if (videoRef.current.readyState < HTMLMediaElement.HAVE_CURRENT_DATA) {
-            // Video not ready yet, skip this frame and try again
             animationFrameRef.current = requestAnimationFrame(detectPose);
             return;
         }
@@ -207,10 +211,12 @@ export default function BadDatePicker() {
             setCount(prevCount => {
                 const newCount = prevCount + 1;
 
-                if (stage === 'year' && newCount < 1909) {
-                    setShowYearError(true);
-                } else {
-                    setShowYearError(false);
+                if (stage === 'year') {
+                    if (newCount > 0 && newCount < 1909) {
+                        setShowYearError(true);
+                    } else if (newCount >= 1909) {
+                        setShowYearError(false);
+                    }
                 }
 
                 return newCount;
@@ -242,34 +248,6 @@ export default function BadDatePicker() {
         }
     }, [isDetecting, detectPose]);
 
-    const handleNext = () => {
-
-        if (stage === 'month' && birthMonth < 1) {
-            setErrorMessage('Please complete at least 1 jumping jack to set your month.');
-            return;
-        }
-        if (stage === 'day' && birthDay < 1) {
-            setErrorMessage('Please complete at least 1 jumping jack to set your day.');
-            return;
-        }
-        if (stage === 'year' && birthYear < 1909) {
-            setErrorMessage('Year must be at least 1909!');
-            return;
-        }
-
-        setIsDetecting(false);
-        setErrorMessage('');
-        setShowYearError(false);
-
-        if (stage === 'month') {
-            setStage('day');
-        } else if (stage === 'day') {
-            setStage('year');
-        } else if (stage === 'year') {
-            setStage('complete');
-        }
-    };
-
     const handleSubmit = () => {
         const formattedDate = `${String(birthMonth).padStart(2, '0')}/${String(birthDay).padStart(2, '0')}/${birthYear}`;
         alert(`Thanks for entering your age!\n\nYour birthday: ${formattedDate}`);
@@ -288,6 +266,7 @@ export default function BadDatePicker() {
         <div className="bad-date-picker">
             <div className="container">
                 <h1 className="title">World's Most Secure Date Picker</h1>
+                <h2>You want to verify you're birthday? You're going to sweat.</h2>
                 <p className="subtitle">Prove you're human by doing jumping jacks for each date component</p>
 
                 {stage !== 'complete' ? (
@@ -308,17 +287,25 @@ export default function BadDatePicker() {
 
                         <div className="stage-info">
                             <h2 className="stage-title">{getStageName()}</h2>
-                            {!isDetecting && (
-                                <button
-                                    onClick={startDetection}
-                                    className="start-button"
-                                    disabled={!cameraReady}
-                                >
-                                    <Camera size={20} />
-                                    Start Jumping Jack Challenge
-                                </button>
-                            )}
-
+                            <div className="stage-buttons">
+                                {!isDetecting && (
+                                    <>
+                                        <button
+                                            onClick={startDetection}
+                                            className="start-button"
+                                            disabled={!cameraReady && !streamRef.current}
+                                        >
+                                            <Camera size={20} />
+                                            Start Jumping Jack Challenge
+                                        </button>
+                                        <button className='force-enable-camera'
+                                            onClick={() => setCameraReady(true)}
+                                        >
+                                            Force Enable Camera
+                                        </button>
+                                    </>
+                                )}
+                            </div>
                             <div className='birthday-display'>
                                 <div>Month: <strong>{birthMonth || '-'}</strong></div>
                                 <div>Day: <strong>{birthDay || '-'}</strong></div>
@@ -339,66 +326,57 @@ export default function BadDatePicker() {
                             )}
                         </div>
 
-                        {isDetecting && (
-                            <div className="counter-section">
-                                <div className={`counter ${showYearError ? 'error' : ''}`}>
-                                    <span className="counter-current">{count}</span>
-                                    <span className="counter-separator"> </span>
-                                    <span className="counter-target">tracked</span>
+                        <div className='detection-section'>
+                            {isDetecting && (
+                                <div className="counter-section">
+                                    <div className={`counter ${showYearError ? 'error' : ''}`}>
+                                        <span className="counter-current">{count}</span>
+                                        <span className="counter-separator"> </span>
+                                        <span className="counter-target">tracked</span>
+                                    </div>
                                 </div>
-                                {showYearError && (
-                                    <div className="year-error">
-                                        <AlertCircle size={20} />
-                                        <span>Year must be at least 1909! Keep going...</span>
-                                    </div>
-                                )}
-                                <button
-                                    onClick={handleNext}
-                                    className="next-button"
-                                    disabled={
-                                        (stage === 'year' && birthYear < 1909) ||
-                                        (stage === 'month' && birthMonth < 1) ||
-                                        (stage === 'day' && birthDay < 1)
-                                    }
-                                >
-                                    Next
-                                </button>
-                            </div>
-                        )}
+                            )}
 
-                        {errorMessage && (
-                            <div className="error-message">
-                                <AlertCircle size={20} />
-                                <span>{errorMessage}</span>
-                            </div>
-                        )}
+                            {showYearError && (
+                                <div className="year-error">
+                                    <AlertCircle size={20} />
+                                    <span>Year must be at least 1909! Keep going...</span>
+                                </div>
+                            )}
 
-                        {cameraReady && (
-                            <div className="video-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                <video
-                                    ref={videoRef}
-                                    className="video-feed"
-                                    autoPlay
-                                    playsInline
-                                    muted
-                                    style={{ width: 640, height: 480, background: '#000', border: '2px solid #ddd' }}
-                                />
-                                {!videoRef.current || !videoRef.current.srcObject ? (
-                                    <div style={{ color: '#999', marginTop: 10 }}>
-                                        Camera stream not attached to video yet.
-                                    </div>
-                                ) : null}
-                                <canvas
-                                    ref={canvasRef}
-                                    className="video-canvas"
-                                    width={640}
-                                    height={480}
-                                    style={{ display: 'none' }}
-                                />
-                            </div>
-                        )}
+                            {errorMessage && (
+                                <div className="error-message">
+                                    <AlertCircle size={20} />
+                                    <span>{errorMessage}</span>
+                                </div>
+                            )}
 
+                            {(cameraReady || streamRef.current) && (
+                                <div className="video-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                    <video
+                                        ref={videoRef}
+                                        className="video-feed"
+                                        autoPlay
+                                        playsInline
+                                        muted
+                                        style={{ width: 640, height: 480, background: '#000', border: '2px solid #ddd' }}
+                                    />
+                                    {!videoRef.current || !videoRef.current.srcObject ? (
+                                        <div style={{ color: '#999', marginTop: 10 }}>
+                                            Camera stream not attached to video yet.
+                                        </div>
+                                    ) : null}
+                                    <canvas
+                                        ref={canvasRef}
+                                        className="video-canvas"
+                                        width={640}
+                                        height={480}
+                                        style={{ display: 'none' }}
+                                    />
+                                </div>
+                            )}
 
+                        </div>
                     </>
                 ) : (
                     <div className="complete-section">

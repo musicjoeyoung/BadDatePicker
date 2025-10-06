@@ -1,9 +1,7 @@
 @use "../styles/partials/typography" as *;
 
-@import url("https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap");
 .bad-date-picker {
     min-height: 100vh;
-    background-image: url("half-jack.jpg");
     padding: 2rem;
     display: flex;
     align-items: center;
@@ -34,6 +32,14 @@
         color: #6b7280;
         font-size: 2rem;
         margin-bottom: 2rem;
+    }
+
+    .stage-buttons {
+        display: flex;
+        flex-direction: column;
+        width: 30%;
+        align-items: center;
+        margin: 0 auto 2rem;
     }
 
     .stage-indicator {
@@ -143,6 +149,27 @@
             height: auto;
             display: block;
         }
+    }
+
+    .year-error {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        color: #ef4444;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        padding: 0.75rem;
+        background: #fee2e2;
+        border-radius: 8px;
+        animation: pulse 2s ease infinite;
+    }
+
+    .detection-section {
+        border: 5px dotted red;
+        border-radius: 1rem;
+        padding: 1rem;
     }
 
     .counter-section {
@@ -295,7 +322,7 @@
     .debug-info {
         font-size: 1rem;
         color: #666;
-        margin-top: 10px;
+        margin-top: 16rem;
     }
 
     .birthday-display {
@@ -317,7 +344,7 @@
 
     .force-enable-camera,
     .open-camera {
-        font-size: 1.8rem;
+        font-size: 1rem;
         padding: 2px 6px;
         margin: 0.5rem 1rem 0 0;
         background-color: red;
