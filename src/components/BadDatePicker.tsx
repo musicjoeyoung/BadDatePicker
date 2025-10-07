@@ -266,7 +266,7 @@ export default function BadDatePicker() {
         <div className="bad-date-picker">
             <div className="container">
                 <h1 className="title">World's Most Secure Date Picker</h1>
-                <h2>You want to verify you're birthday? You're going to sweat.</h2>
+                <h2>You want to verify your birthday? You're going to sweat.</h2>
                 <p className="subtitle">Prove you're human by doing jumping jacks for each date component</p>
 
                 {stage !== 'complete' ? (
