@@ -1,4 +1,5 @@
-import { Camera } from 'lucide-react';
+import { Camera, Loader2 } from 'lucide-react';
+
 import type { RefObject } from 'react';
 
 type Stage = 'month' | 'day' | 'year' | 'complete';
@@ -11,6 +12,7 @@ interface StageControlsProps {
     isDetecting: boolean;
     count: number;
     cameraReady: boolean;
+    isInitializing: boolean;
     streamRef: RefObject<MediaStream | null>;
     onStartDetection: () => void;
     onFinishDetection: () => void;
@@ -22,6 +24,7 @@ const StageControls = ({
     isDetecting,
     count,
     cameraReady,
+    isInitializing,
     streamRef,
     onStartDetection,
     onFinishDetection,
@@ -47,13 +50,25 @@ const StageControls = ({
             <div className="stage-buttons">
                 {!isDetecting && (
                     <>
+                        <p className="camera-help-text">
+                            (If nothing is happening click <span className='force-camera'>Force Enable Camera</span> and then <span className='connecting-camera'>Connecting Camera / Start Jumping Jack Challenge</span>. ↓)
+                        </p>
                         <button
                             onClick={onStartDetection}
                             className="start-button"
                             disabled={!cameraReady && !streamRef.current}
                         >
-                            <Camera size={20} />
-                            Start Jumping Jack Challenge
+                            {isInitializing ? (
+                                <>
+                                    <Loader2 size={20} className="spinner" />
+                                    Connecting Camera...
+                                </>
+                            ) : (
+                                <>
+                                    <Camera size={20} />
+                                    Start Jumping Jack Challenge
+                                </>
+                            )}
                         </button>
                         <button className='force-enable-camera' onClick={onForceEnableCamera}>
                             Force Enable Camera

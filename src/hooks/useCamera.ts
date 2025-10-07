@@ -6,6 +6,7 @@ interface UseCameraReturn {
     videoRef: RefObject<HTMLVideoElement | null>;
     streamRef: RefObject<MediaStream | null>;
     cameraReady: boolean;
+    isInitializing: boolean;
     errorMessage: string;
     setCameraReady: (ready: boolean) => void;
     setErrorMessage: (message: string) => void;
@@ -16,9 +17,11 @@ export function useCamera(): UseCameraReturn {
     const videoRef = useRef<HTMLVideoElement>(null);
     const streamRef = useRef<MediaStream | null>(null);
     const [cameraReady, setCameraReady] = useState(false);
+    const [isInitializing, setIsInitializing] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
     const initializeCamera = async () => {
+        setIsInitializing(true);
         try {
             const stream = await navigator.mediaDevices.getUserMedia({
                 video: { width: 640, height: 480 }
@@ -29,6 +32,7 @@ export function useCamera(): UseCameraReturn {
             if (videoRef.current) {
                 videoRef.current.srcObject = stream;
                 setCameraReady(true);
+                setIsInitializing(false);
 
                 const handleLoadedMetadata = () => {
                     videoRef.current?.play().catch((error) => {
@@ -41,6 +45,7 @@ export function useCamera(): UseCameraReturn {
         } catch (error: unknown) {
             console.error('Camera access error:', error);
             setErrorMessage('Camera access denied. Please allow camera access to use this date picker.');
+            setIsInitializing(false);
         }
     };
 
@@ -89,6 +94,7 @@ export function useCamera(): UseCameraReturn {
         videoRef,
         streamRef,
         cameraReady,
+        isInitializing,
         errorMessage,
         setCameraReady,
         setErrorMessage,

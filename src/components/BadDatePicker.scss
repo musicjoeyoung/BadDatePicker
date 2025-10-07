@@ -41,6 +41,23 @@
         margin: 0 auto 2rem;
     }
 
+    .camera-help-text {
+        background-color: linen;
+        color: #22c55e;
+        font-size: 1.15rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        text-align: center;
+        max-width: 400px;
+        padding: 0.5rem;
+        line-height: 2.1rem;
+        border-radius: 8px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        -ms-border-radius: 8px;
+        -o-border-radius: 8px;
+    }
+
     .stage-indicator {
         display: flex;
         align-items: center;
@@ -151,7 +168,8 @@
 
     .year-error {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        flex-wrap: wrap;
         align-items: center;
         justify-content: center;
         gap: 0.5rem;
@@ -163,17 +181,13 @@
         background: #fee2e2;
         border-radius: 8px;
         animation: pulse 2s ease infinite;
-
-        .year-error-content {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+        text-align: center;
 
         a {
             color: #b91c1c;
             text-decoration: underline;
             font-size: 1rem;
+            white-space: nowrap;
 
             &:hover {
                 color: #7f1d1d;
@@ -243,29 +257,26 @@
 
         .year-error {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
+            flex-wrap: wrap;
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
             color: #ef4444;
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             font-weight: 600;
             margin-bottom: 1rem;
             padding: 0.75rem;
             background: #fee2e2;
             border-radius: 8px;
             animation: pulse 2s ease infinite;
-
-            .year-error-content {
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-            }
+            text-align: center;
 
             a {
                 color: #b91c1c;
                 text-decoration: underline;
-                font-size: 1rem;
+                font-size: 0.9rem;
+                white-space: nowrap;
 
                 &:hover {
                     color: #7f1d1d;
@@ -430,6 +441,19 @@
         }
     }
 
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .spinner {
+        animation: spin 1s linear infinite;
+    }
+
     @media (max-width: 768px) {
         padding: 1rem;
 
@@ -493,4 +517,17 @@
         height: 60px;
         width: 217px;
     }
+}
+
+.force-camera {
+    color: red;
+    border: 1px solid red;
+    border-radius: 6px;
+    padding: 2px;
+}
+.connecting-camera {
+    color: #ff7a18;
+    border: 1px solid #ff7a18;
+    border-radius: 6px;
+    padding: 2px;
 }

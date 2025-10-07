@@ -36,12 +36,9 @@ const ErrorDisplay = ({
 
             {showYearError && (
                 <div className="year-error">
-                    <div className="year-error-content">
-                        <AlertCircle size={20} />
-                        <span>Year must be between {MIN_YEAR} and {CURRENT_YEAR}!</span>
-                    </div>
-                    <a href="https://www.bbc.com/news/articles/cy5p7xv4zeyo" target="_blank" >(You are not this old.)</a>
-
+                    <AlertCircle size={20} />
+                    <span>Year must be between {MIN_YEAR} and {CURRENT_YEAR}!</span>
+                    <a href="https://www.bbc.com/news/articles/cy5p7xv4zeyo" target="_blank" rel="noopener noreferrer">(You are not this old.)</a>
                 </div>
             )}
 

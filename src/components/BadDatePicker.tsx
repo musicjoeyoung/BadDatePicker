@@ -35,6 +35,7 @@ const BadDatePicker = () => {
         videoRef,
         streamRef,
         cameraReady,
+        isInitializing,
         errorMessage,
         setCameraReady,
         setErrorMessage,
@@ -196,6 +197,7 @@ const BadDatePicker = () => {
                             isDetecting={isDetecting}
                             count={count}
                             cameraReady={cameraReady}
+                            isInitializing={isInitializing}
                             streamRef={streamRef}
                             onStartDetection={startDetection}
                             onFinishDetection={finishDetection}
