@@ -20,11 +20,11 @@ export function useCamera(): UseCameraReturn {
 
     const initializeCamera = async () => {
         try {
-            console.log('Requesting camera access...');
+            // console.log('Requesting camera access...');
             const stream = await navigator.mediaDevices.getUserMedia({
                 video: { width: 640, height: 480 }
             });
-            console.log('Camera access granted, stream obtained');
+            // console.log('Camera access granted, stream obtained');
 
             streamRef.current = stream;
 
@@ -33,7 +33,7 @@ export function useCamera(): UseCameraReturn {
                 setCameraReady(true);
 
                 const handleLoadedMetadata = () => {
-                    console.log('Video metadata loaded');
+                    // console.log('Video metadata loaded');
                     videoRef.current?.play().catch((error) => {
                         console.error('Error starting video playback:', error);
                     });
@@ -50,11 +50,11 @@ export function useCamera(): UseCameraReturn {
     useEffect(() => {
         const tryAttach = () => {
             if (streamRef.current && videoRef.current && !videoRef.current.srcObject) {
-                console.log('Attaching existing media stream to video element');
+                // console.log('Attaching existing media stream to video element');
                 try {
                     videoRef.current.srcObject = streamRef.current;
                     videoRef.current.play().then(() => {
-                        console.log('Video playback started after attaching stream');
+                        // console.log('Video playback started after attaching stream');
                     }).catch(err => {
                         console.error('Error starting playback after attaching stream:', err);
                     });

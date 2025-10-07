@@ -45,31 +45,31 @@ export default function BadDatePicker() {
         setCount(prevCount => {
             const newCount = prevCount + increment;
 
-            console.log('handleJumpCompleted:', { stage, prevCount, newCount });
+            // console.log('handleJumpCompleted:', { stage, prevCount, newCount });
 
             if (stage === 'month') {
                 if (newCount > 0 && (newCount < 1 || newCount > 12)) {
-                    console.log('Setting showMonthError to TRUE');
+                    // console.log('Setting showMonthError to TRUE');
                     setShowMonthError(true);
                 } else if (newCount >= 1 && newCount <= 12) {
-                    console.log('Setting showMonthError to FALSE');
+                    // console.log('Setting showMonthError to FALSE');
                     setShowMonthError(false);
                 }
             } else if (stage === 'day') {
                 if (newCount > 0 && (newCount < 1 || newCount > 31)) {
-                    console.log('Setting showDayError to TRUE');
+                    // console.log('Setting showDayError to TRUE');
                     setShowDayError(true);
                 } else if (newCount >= 1 && newCount <= 31) {
-                    console.log('Setting showDayError to FALSE');
+                    // console.log('Setting showDayError to FALSE');
                     setShowDayError(false);
                 }
             } else if (stage === 'year') {
-                console.log('Year stage check:', { newCount, willShowError: newCount > 0 && (newCount < MIN_YEAR || newCount > CURRENT_YEAR) });
+                // console.log('Year stage check:', { newCount, willShowError: newCount > 0 && (newCount < MIN_YEAR || newCount > CURRENT_YEAR) });
                 if (newCount > 0 && (newCount < MIN_YEAR || newCount > CURRENT_YEAR)) {
-                    console.log('Setting showYearError to TRUE');
+                    // console.log('Setting showYearError to TRUE');
                     setShowYearError(true);
                 } else if (newCount >= MIN_YEAR && newCount <= CURRENT_YEAR) {
-                    console.log('Setting showYearError to FALSE');
+                    // console.log('Setting showYearError to FALSE');
                     setShowYearError(false);
                 }
             }
@@ -118,7 +118,7 @@ export default function BadDatePicker() {
         setShowYearError(false);
 
         resetDetector();
-        console.log('Starting detection loop');
+        // console.log('Starting detection loop');
     };
 
     const finishDetection = () => {
