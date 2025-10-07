@@ -29,7 +29,6 @@ export function usePoseDetection({
         try {
             detectorRef.current = new JumpingJackDetector();
             await detectorRef.current.initialize();
-            // console.log('Pose detector initialized successfully');
         } catch (error) {
             console.error('Failed to initialize pose detector:', error);
             throw error;
