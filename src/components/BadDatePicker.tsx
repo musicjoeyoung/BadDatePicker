@@ -14,6 +14,9 @@ import { usePoseDetection } from '../hooks/usePoseDetection';
 
 type Stage = 'month' | 'day' | 'year' | 'complete';
 
+const CURRENT_YEAR = new Date().getFullYear();
+const MIN_YEAR = 1909;
+
 export default function BadDatePicker() {
     const [stage, setStage] = useState<Stage>('month');
     const [count, setCount] = useState(0);
@@ -61,11 +64,11 @@ export default function BadDatePicker() {
                     setShowDayError(false);
                 }
             } else if (stage === 'year') {
-                console.log('Year stage check:', { newCount, willShowError: newCount > 0 && newCount < 1909 });
-                if (newCount > 0 && newCount < 1909) {
+                console.log('Year stage check:', { newCount, willShowError: newCount > 0 && (newCount < MIN_YEAR || newCount > CURRENT_YEAR) });
+                if (newCount > 0 && (newCount < MIN_YEAR || newCount > CURRENT_YEAR)) {
                     console.log('Setting showYearError to TRUE');
                     setShowYearError(true);
-                } else if (newCount >= 1909) {
+                } else if (newCount >= MIN_YEAR && newCount <= CURRENT_YEAR) {
                     console.log('Setting showYearError to FALSE');
                     setShowYearError(false);
                 }
@@ -136,8 +139,21 @@ export default function BadDatePicker() {
             }
         } else if (stage === 'year') {
             setBirthYear(count);
-            if (count < 1909) {
-                setErrorMessage('Year must be at least 1909!');
+            if (count < MIN_YEAR) {
+                setErrorMessage(`Year must be at least ${MIN_YEAR}!`);
+                setShowYearError(true);
+                return;
+            }
+            if (count > CURRENT_YEAR) {
+                setErrorMessage(`Year cannot be greater than ${CURRENT_YEAR}!`);
+                setShowYearError(true);
+                return;
+            }
+
+            const birthDate = new Date(count, birthMonth - 1, birthDay);
+            const today = new Date();
+            if (birthDate > today) {
+                setErrorMessage('Birthday cannot be in the future!');
                 setShowYearError(true);
                 return;
             }
@@ -238,6 +254,11 @@ export default function BadDatePicker() {
                     <button className='open-camera' onClick={initializeCamera}>
                         Open Camera
                     </button>
+                    <button className='force-year-error' onClick={() => setShowYearError(true)}>
+                        Force Year Error
+                    </button>
+                    <div>Stage: {stage}, Count: {count}, showYearError: {String(showYearError)}</div>
+                    <div>MIN_YEAR: {MIN_YEAR}, CURRENT_YEAR: {CURRENT_YEAR}</div>
                 </div>
             </div>
         </div>

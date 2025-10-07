@@ -1,5 +1,8 @@
 import { AlertCircle } from 'lucide-react';
 
+const CURRENT_YEAR = new Date().getFullYear();
+const MIN_YEAR = 1909;
+
 interface ErrorDisplayProps {
     showMonthError: boolean;
     showDayError: boolean;
@@ -31,8 +34,12 @@ export default function ErrorDisplay({
 
             {showYearError && (
                 <div className="year-error">
-                    <AlertCircle size={20} />
-                    <span>Year must be at least 1909! Keep going...</span>
+                    <div className="year-error-content">
+                        <AlertCircle size={20} />
+                        <span>Year must be between {MIN_YEAR} and {CURRENT_YEAR}!</span>
+                    </div>
+                    <a href="https://www.bbc.com/news/articles/cy5p7xv4zeyo" target="_blank" >(You are not this old.)</a>
+
                 </div>
             )}
 

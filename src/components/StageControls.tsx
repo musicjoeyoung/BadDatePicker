@@ -3,6 +3,9 @@ import type { RefObject } from 'react';
 
 type Stage = 'month' | 'day' | 'year' | 'complete';
 
+const CURRENT_YEAR = new Date().getFullYear();
+const MIN_YEAR = 1909;
+
 interface StageControlsProps {
     stage: Stage;
     isDetecting: boolean;
@@ -34,7 +37,7 @@ export default function StageControls({
     const isFinishDisabled = () => {
         if (stage === 'month') return count < 1 || count > 12;
         if (stage === 'day') return count < 1 || count > 31;
-        if (stage === 'year') return count < 1909;
+        if (stage === 'year') return count < MIN_YEAR || count > CURRENT_YEAR;
         return false;
     };
 
