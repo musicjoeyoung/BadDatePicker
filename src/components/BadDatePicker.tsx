@@ -169,7 +169,7 @@ export default function BadDatePicker() {
 
     const handleSubmit = () => {
         const formattedDate = `${String(birthMonth).padStart(2, '0')}/${String(birthDay).padStart(2, '0')}/${birthYear}`;
-        alert(`Thanks for entering your age!\n\nYour birthday: ${formattedDate}`);
+        alert(`Thanks for entering your age! Go away and read a book now! \n\nYour birthday: ${formattedDate}`);
     };
 
     return (
@@ -244,7 +244,17 @@ export default function BadDatePicker() {
                     <button className='open-camera' onClick={initializeCamera}>
                         Open Camera
                     </button>
-
+                    {/*                     <button
+                        className='skip-to-complete'
+                        onClick={() => {
+                            setBirthMonth(5);
+                            setBirthDay(15);
+                            setBirthYear(1930); //change this to test different ages
+                            setStage('complete');
+                        }}
+                    >
+                        Skip to Completion (Test Age Messages)
+                    </button> */}
                 </div>
             </div>
         </div>
