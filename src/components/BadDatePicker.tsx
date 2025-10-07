@@ -7,6 +7,10 @@ import { JumpingJackDetector } from '../utils/poseDetection';
 
 type Stage = 'month' | 'day' | 'year' | 'complete';
 
+
+//const TESTING_MODE = true;
+//const MIN_YEAR = TESTING_MODE ? 5 : 1909;
+
 export default function BadDatePicker() {
     const [stage, setStage] = useState<Stage>('month');
     const [count, setCount] = useState(0);
@@ -177,7 +181,7 @@ export default function BadDatePicker() {
         } else if (stage === 'year') {
             setBirthYear(count);
             if (count < 1909) {
-                setErrorMessage('Year must be at least 1909!');
+                setErrorMessage(`Year must be at least 1909!`);
                 setShowYearError(true);
                 return;
             }
