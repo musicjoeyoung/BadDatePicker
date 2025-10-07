@@ -58,9 +58,12 @@ const BadDatePicker = () => {
                     setShowDayError(false);
                 }
             } else if (stage === 'year') {
+                //console.log('Year stage check:', { newCount, MIN_YEAR, CURRENT_YEAR, willShowError: newCount > 0 && (newCount < MIN_YEAR || newCount > CURRENT_YEAR) });
                 if (newCount > 0 && (newCount < MIN_YEAR || newCount > CURRENT_YEAR)) {
+                    //console.log('Setting showYearError to TRUE');
                     setShowYearError(true);
                 } else if (newCount >= MIN_YEAR && newCount <= CURRENT_YEAR) {
+                    //console.log('Setting showYearError to FALSE');
                     setShowYearError(false);
                 }
             }

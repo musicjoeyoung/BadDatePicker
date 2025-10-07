@@ -16,6 +16,8 @@ const ErrorDisplay = ({
     showYearError,
     errorMessage
 }: ErrorDisplayProps) => {
+    //console.log('ErrorDisplay received:', { showMonthError, showDayError, showYearError, errorMessage });
+
     return (
         <>
             {showMonthError && (
