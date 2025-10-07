@@ -7,7 +7,7 @@ interface CompletionScreenProps {
     onSubmit: () => void;
 }
 
-export default function CompletionScreen({ birthMonth, birthDay, birthYear, onSubmit }: CompletionScreenProps) {
+const CompletionScreen = ({ birthMonth, birthDay, birthYear, onSubmit }: CompletionScreenProps) => {
     const today = new Date();
     const birthDate = new Date(birthYear, birthMonth - 1, birthDay);
     let age = today.getFullYear() - birthDate.getFullYear();
@@ -64,3 +64,5 @@ export default function CompletionScreen({ birthMonth, birthDay, birthYear, onSu
         </div>
     );
 }
+
+export default CompletionScreen;

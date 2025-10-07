@@ -4,7 +4,7 @@ interface BirthdayDisplayProps {
     birthYear: number;
 }
 
-export default function BirthdayDisplay({ birthMonth, birthDay, birthYear }: BirthdayDisplayProps) {
+const BirthdayDisplay = ({ birthMonth, birthDay, birthYear }: BirthdayDisplayProps) => {
     return (
         <div className='birthday-display'>
             <div>Month: <strong>{birthMonth || '-'}</strong></div>
@@ -13,3 +13,5 @@ export default function BirthdayDisplay({ birthMonth, birthDay, birthYear }: Bir
         </div>
     );
 }
+
+export default BirthdayDisplay;

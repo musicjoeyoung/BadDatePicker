@@ -10,12 +10,12 @@ interface ErrorDisplayProps {
     errorMessage: string;
 }
 
-export default function ErrorDisplay({
+const ErrorDisplay = ({
     showMonthError,
     showDayError,
     showYearError,
     errorMessage
-}: ErrorDisplayProps) {
+}: ErrorDisplayProps) => {
     return (
         <>
             {showMonthError && (
@@ -52,3 +52,5 @@ export default function ErrorDisplay({
         </>
     );
 }
+
+export default ErrorDisplay;

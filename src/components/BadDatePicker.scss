@@ -1,5 +1,4 @@
 @use "../styles/partials/typography" as *;
-@use "../styles/partials/mixins" as *;
 
 .bad-date-picker {
     min-height: 100vh;
@@ -444,5 +443,35 @@
                 font-size: 2rem;
             }
         }
+    }
+}
+.footer {
+    padding: 0.5rem;
+    background-color: white;
+    text-align: center;
+    margin-top: 5rem;
+
+    .footer__copyright,
+    .footer__support {
+        margin-block: 0;
+    }
+
+    .footer__copyright {
+        font-size: 1.2rem;
+        font-weight: 600;
+
+        a {
+            font-weight: 600;
+        }
+    }
+
+    .footer__support {
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+
+    .footer__coffee {
+        height: 60px;
+        width: 217px;
     }
 }

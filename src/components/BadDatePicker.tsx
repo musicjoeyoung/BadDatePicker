@@ -17,7 +17,7 @@ type Stage = 'month' | 'day' | 'year' | 'complete';
 const CURRENT_YEAR = new Date().getFullYear();
 const MIN_YEAR = 1909;
 
-export default function BadDatePicker() {
+const BadDatePicker = () => {
     const [stage, setStage] = useState<Stage>('month');
     const [count, setCount] = useState(0);
     const [isDetecting, setIsDetecting] = useState(false);
@@ -260,3 +260,5 @@ export default function BadDatePicker() {
         </div>
     );
 }
+
+export default BadDatePicker;

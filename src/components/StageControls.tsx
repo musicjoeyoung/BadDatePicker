@@ -17,7 +17,7 @@ interface StageControlsProps {
     onForceEnableCamera: () => void;
 }
 
-export default function StageControls({
+const StageControls = ({
     stage,
     isDetecting,
     count,
@@ -26,7 +26,7 @@ export default function StageControls({
     onStartDetection,
     onFinishDetection,
     onForceEnableCamera
-}: StageControlsProps) {
+}: StageControlsProps) => {
     const getStageName = () => {
         if (stage === 'month') return 'Birth Month';
         if (stage === 'day') return 'Birth Day';
@@ -75,3 +75,5 @@ export default function StageControls({
         </div>
     );
 }
+
+export default StageControls;

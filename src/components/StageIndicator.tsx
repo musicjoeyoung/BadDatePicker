@@ -9,7 +9,7 @@ interface StageIndicatorProps {
     birthYear: number;
 }
 
-export default function StageIndicator({ currentStage, birthMonth, birthDay, birthYear }: StageIndicatorProps) {
+const StageIndicator = ({ currentStage, birthMonth, birthDay, birthYear }: StageIndicatorProps) => {
     return (
         <div className="stage-indicator">
             <div className={`stage-step ${currentStage === 'month' ? 'active' : birthMonth > 0 ? 'completed' : ''}`}>
@@ -26,3 +26,5 @@ export default function StageIndicator({ currentStage, birthMonth, birthDay, bir
         </div>
     );
 }
+
+export default StageIndicator;

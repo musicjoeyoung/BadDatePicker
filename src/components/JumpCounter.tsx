@@ -3,7 +3,7 @@ interface JumpCounterProps {
     hasError: boolean;
 }
 
-export default function JumpCounter({ count, hasError }: JumpCounterProps) {
+const JumpCounter = ({ count, hasError }: JumpCounterProps) => {
     return (
         <div className="counter-section">
             <div className={`counter ${hasError ? 'error' : ''}`}>
@@ -14,3 +14,5 @@ export default function JumpCounter({ count, hasError }: JumpCounterProps) {
         </div>
     );
 }
+
+export default JumpCounter;

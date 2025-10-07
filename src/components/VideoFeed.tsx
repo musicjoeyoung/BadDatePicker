@@ -7,7 +7,7 @@ interface VideoFeedProps {
     streamRef: RefObject<MediaStream | null>;
 }
 
-export default function VideoFeed({ videoRef, canvasRef, cameraReady, streamRef }: VideoFeedProps) {
+const VideoFeed = ({ videoRef, canvasRef, cameraReady, streamRef }: VideoFeedProps) => {
     if (!cameraReady && !streamRef.current) {
         return null;
     }
@@ -37,3 +37,5 @@ export default function VideoFeed({ videoRef, canvasRef, cameraReady, streamRef 
         </div>
     );
 }
+
+export default VideoFeed;
