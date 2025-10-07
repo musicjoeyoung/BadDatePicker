@@ -13,6 +13,8 @@ export default function BadDatePicker() {
     const [isDetecting, setIsDetecting] = useState(false);
     const [cameraReady, setCameraReady] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [showMonthError, setShowMonthError] = useState(false);
+    const [showDayError, setShowDayError] = useState(false);
     const [showYearError, setShowYearError] = useState(false);
 
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -145,6 +147,8 @@ export default function BadDatePicker() {
         setIsDetecting(true);
         setCount(0);
         setErrorMessage('');
+        setShowMonthError(false);
+        setShowDayError(false);
         setShowYearError(false);
 
         if (detectorRef.current) {
@@ -158,8 +162,18 @@ export default function BadDatePicker() {
     const finishDetection = () => {
         if (stage === 'month') {
             setBirthMonth(count);
+            if (count < 1 || count > 12) {
+                setErrorMessage('Month must be between 1 and 12!');
+                setShowMonthError(true);
+                return;
+            }
         } else if (stage === 'day') {
             setBirthDay(count);
+            if (count < 1 || count > 31) {
+                setErrorMessage('Day must be between 1 and 31!');
+                setShowDayError(true);
+                return;
+            }
         } else if (stage === 'year') {
             setBirthYear(count);
             if (count < 1909) {
@@ -170,6 +184,8 @@ export default function BadDatePicker() {
         }
 
         setErrorMessage('');
+        setShowMonthError(false);
+        setShowDayError(false);
         setShowYearError(false);
 
         setCount(0);
@@ -178,12 +194,13 @@ export default function BadDatePicker() {
             detectorRef.current.reset();
         }
 
-        if (stage === 'month') setStage('day');
-        else if (stage === 'day') {
+        if (stage === 'month') {
+            setStage('day');
+            setShowDayError(false);
+        } else if (stage === 'day') {
             setStage('year');
             setShowYearError(false);
-        }
-        else if (stage === 'year') {
+        } else if (stage === 'year') {
             setStage('complete');
         }
     };
@@ -211,7 +228,19 @@ export default function BadDatePicker() {
             setCount(prevCount => {
                 const newCount = prevCount + 1;
 
-                if (stage === 'year') {
+                if (stage === 'month') {
+                    if (newCount > 0 && (newCount < 1 || newCount > 12)) {
+                        setShowMonthError(true);
+                    } else if (newCount >= 1 && newCount <= 12) {
+                        setShowMonthError(false);
+                    }
+                } else if (stage === 'day') {
+                    if (newCount > 0 && (newCount < 1 || newCount > 31)) {
+                        setShowDayError(true);
+                    } else if (newCount >= 1 && newCount <= 31) {
+                        setShowDayError(false);
+                    }
+                } else if (stage === 'year') {
                     if (newCount > 0 && newCount < 1909) {
                         setShowYearError(true);
                     } else if (newCount >= 1909) {
@@ -260,8 +289,6 @@ export default function BadDatePicker() {
         return 'Complete';
     };
 
-
-
     return (
         <div className="bad-date-picker">
             <div className="container">
@@ -306,19 +333,18 @@ export default function BadDatePicker() {
                                     </>
                                 )}
                             </div>
-                            <div className='birthday-display'>
-                                <div>Month: <strong>{birthMonth || '-'}</strong></div>
-                                <div>Day: <strong>{birthDay || '-'}</strong></div>
-                                <div>Year: <strong>{birthYear || '-'}</strong></div>
-                            </div>
+
                             {isDetecting && (
                                 <>
-                                    <p className="stage-description">Tracking jumps... {count}</p>
                                     <button
                                         onClick={finishDetection}
                                         className="next-button"
                                         style={{ marginTop: 10 }}
-                                        disabled={stage === 'year' && count < 1909}
+                                        disabled={
+                                            (stage === 'month' && (count < 1 || count > 12)) ||
+                                            (stage === 'day' && (count < 1 || count > 31)) ||
+                                            (stage === 'year' && count < 1909)
+                                        }
                                     >
                                         Finish Stage
                                     </button>
@@ -329,11 +355,29 @@ export default function BadDatePicker() {
                         <div className='detection-section'>
                             {isDetecting && (
                                 <div className="counter-section">
-                                    <div className={`counter ${showYearError ? 'error' : ''}`}>
+                                    <div className={`counter ${showMonthError || showDayError || showYearError ? 'error' : ''}`}>
                                         <span className="counter-current">{count}</span>
                                         <span className="counter-separator"> </span>
                                         <span className="counter-target">tracked</span>
                                     </div>
+                                </div>
+                            )}                            <div className='birthday-display'>
+                                <div>Month: <strong>{birthMonth || '-'}</strong></div>
+                                <div>Day: <strong>{birthDay || '-'}</strong></div>
+                                <div>Year: <strong>{birthYear || '-'}</strong></div>
+                            </div>
+
+                            {showMonthError && (
+                                <div className="month-error">
+                                    <AlertCircle size={20} />
+                                    <span>Month must be between 1 and 12!</span>
+                                </div>
+                            )}
+
+                            {showDayError && (
+                                <div className="day-error">
+                                    <AlertCircle size={20} />
+                                    <span>Day must be between 1 and 31!</span>
                                 </div>
                             )}
 
@@ -397,12 +441,9 @@ export default function BadDatePicker() {
                         </button>
                     </div>
                 )}
-                {/* Debug info */}
+
                 <div className='debug-info' >
-                    Debug: cameraReady = {cameraReady.toString()}, isDetecting = {isDetecting.toString()}, trackedJumps = {count}
-                    <br />
-                    Video readyState: {videoRef.current ? videoRef.current.readyState : 'no-video'}, srcObject: {videoRef.current && videoRef.current.srcObject ? 'attached' : 'none'}
-                    <br />
+
                     <button className='force-enable-camera'
                         onClick={() => setCameraReady(true)}
                     >
@@ -415,25 +456,6 @@ export default function BadDatePicker() {
                         }}
                     >
                         Open Camera
-                    </button>
-                    <button
-                        onClick={async () => {
-                            if (streamRef.current && videoRef.current) {
-                                try {
-                                    videoRef.current.srcObject = streamRef.current;
-                                    await videoRef.current.play();
-                                    console.log('Manual attach & play succeeded');
-                                    setCameraReady(true);
-                                } catch (err) {
-                                    console.error('Manual attach & play failed:', err);
-                                }
-                            } else {
-                                console.log('No stream or video to attach');
-                            }
-                        }}
-                        style={{ fontSize: '10px', padding: '2px 6px', marginLeft: 8 }}
-                    >
-                        Attach & Play
                     </button>
                 </div>
             </div>

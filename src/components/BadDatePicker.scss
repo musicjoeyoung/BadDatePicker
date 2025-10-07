@@ -1,4 +1,5 @@
 @use "../styles/partials/typography" as *;
+@use "../styles/partials/mixins" as *;
 
 .bad-date-picker {
     min-height: 100vh;
@@ -37,7 +38,6 @@
     .stage-buttons {
         display: flex;
         flex-direction: column;
-        width: 30%;
         align-items: center;
         margin: 0 auto 2rem;
     }
@@ -84,7 +84,7 @@
 
     .stage-info {
         text-align: center;
-        margin-bottom: 2rem;
+        margin-bottom: 0.5rem;
 
         .stage-title {
             font-size: 3.1rem;
@@ -169,18 +169,42 @@
     .detection-section {
         border: 5px dotted red;
         border-radius: 1rem;
-        padding: 1rem;
+        padding: 0 1rem;
+
+        .next-button {
+            display: none;
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 0.875rem 2.5rem;
+            border-radius: 12px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+
+            &:hover:not(:disabled) {
+                background: #059669;
+                transform: translateY(-2px);
+                box-shadow: 0 8px 20px rgba(16, 185, 129, 0.5);
+            }
+
+            &:disabled {
+                background: #d1d5db;
+                cursor: not-allowed;
+                box-shadow: none;
+            }
+        }
     }
 
     .counter-section {
         text-align: center;
-        margin-bottom: 1rem;
 
         .counter {
             font-size: 4rem;
             font-weight: 800;
             color: #1f2937;
-            margin-bottom: 1rem;
             transition: all 0.3s ease;
 
             &.error {
@@ -216,32 +240,6 @@
             border-radius: 8px;
             animation: pulse 2s ease infinite;
         }
-
-        .next-button {
-            display: none;
-            background: #10b981;
-            color: white;
-            border: none;
-            padding: 0.875rem 2.5rem;
-            border-radius: 12px;
-            font-size: 1.125rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
-
-            &:hover:not(:disabled) {
-                background: #059669;
-                transform: translateY(-2px);
-                box-shadow: 0 8px 20px rgba(16, 185, 129, 0.5);
-            }
-
-            &:disabled {
-                background: #d1d5db;
-                cursor: not-allowed;
-                box-shadow: none;
-            }
-        }
     }
 
     .error-message {
@@ -255,6 +253,7 @@
         background: #fee2e2;
         border-radius: 12px;
         margin-top: 1rem;
+        font-size: 1.5rem;
     }
 
     .complete-section {
