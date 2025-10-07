@@ -313,6 +313,19 @@
             }
         }
 
+        .age-message {
+            font-size: 1.25rem;
+            color: #374151;
+            line-height: 1.6;
+            margin: 1.5rem auto;
+            padding: 1rem 2rem;
+            background: #f9fafb;
+            border-left: 4px solid #ff7a18;
+            border-radius: 8px;
+            max-width: 600px;
+            font-style: italic;
+        }
+
         .submit-button {
             background: linear-gradient(135deg, #ff7a18 0%, #ff4e00 100%);
             color: white;
