@@ -254,11 +254,7 @@ export default function BadDatePicker() {
                     <button className='open-camera' onClick={initializeCamera}>
                         Open Camera
                     </button>
-                    <button className='force-year-error' onClick={() => setShowYearError(true)}>
-                        Force Year Error
-                    </button>
-                    <div>Stage: {stage}, Count: {count}, showYearError: {String(showYearError)}</div>
-                    <div>MIN_YEAR: {MIN_YEAR}, CURRENT_YEAR: {CURRENT_YEAR}</div>
+
                 </div>
             </div>
         </div>
