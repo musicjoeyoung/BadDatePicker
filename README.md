@@ -4,6 +4,8 @@
 
 An intentionally frustrating date input that forces users to do jumping jacks for every single digit. Built for the [Bad UX World Cup](https://badux.lol/) by Nordcraft.
 
+[Live at https://bad-date-picker.netlify.app/](https://bad-date-picker.netlify.app/)
+
 ## 🎯 The Concept
 
 Why type your birthday like a normal person when you can **sweat for it**? This date picker uses AI-powered pose detection to track jumping jacks. Want to enter your birth month? Better start jumping. Each jump increments the number. No shortcuts, no mercy.
